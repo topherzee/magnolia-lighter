@@ -1,0 +1,11 @@
+form:
+  tabs:
+    - name: tabTexts
+      label: Quotation
+      fields:
+        - name: quotation
+          class: richTextField
+          label: Quotation
+        - name: citedPerson
+          class: textField
+          label: Cited person

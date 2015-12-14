@@ -1,0 +1,3 @@
+renderType: freemarker
+dialog: hello-magnolia:components/quotation
+title: Quotation

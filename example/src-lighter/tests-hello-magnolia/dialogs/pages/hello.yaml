@@ -1,0 +1,8 @@
+form:
+  tabs-extends: ./example/src-lighter/fragments/dialogs/page-tabs.yaml
+  tabs:
+    - name: tabText
+      label: Hello Texts
+      fields:
+        - name: title
+          label: Hello Title
