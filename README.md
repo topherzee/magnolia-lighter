@@ -26,16 +26,16 @@ If a template definition does not specify a template script - then a ref to the 
 
 
 ##Usage
-Install npm https://www.npmjs.com/.
-Run 'npm install' to install all of the dependencies.
-Place all source files in src-lighter directory (Note - already present in 'example' directory)
+* Install npm https://www.npmjs.com/.
+* Run 'npm install' to install all of the dependencies.
+* Place all source files in src-lighter directory (Note - already present in 'example' directory)
 From command line run:
 * gulp copy
 * gulp extends
 * gulp autoref
   * or to run all of the above tasks in sequence, run the default task: - just type
   * gulp
-Files in light-modules directory are overwritten.
+* Files in light-modules directory are overwritten.
 
 License:
 MIT
