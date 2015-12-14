@@ -3,25 +3,39 @@ POC for system to process very light configuration files into valid Magnolia 5.4
 
 ##Features
 
-###Fields:
+####Fields:
 You can use names like textField.
 
-###Prototypes:
-Specify prototypes for configuration of each definition type.
-Definitions will then merge with those automatically.
-
-###Extends:
+####Extends:
 YAML must still be valid YAML.
 To use - include a field with a '-extends' after it, with a path as a value.
 tabs-extends:
 will extend tabs.
 
-##IN PROGRESS:
+####Prototypes:
+Specify prototypes for configuration of each definition type.
+Definitions will then merge with those automatically.
+(Uses Extends feature.)
 
-TemplateDefinition AutoReferencing:
-Automatic association based on file name.
-A template definition will automatically use the dialog with the same name if no dialog is specified.
-A template definition will automatically use the templateScript with the same name if no script is defined.
+####Dialogs have default actions
+A /prototypes/prototype.dialog.yaml configures the commit and cancel action.
+(Uses prototype feature)
+
+####Script Auto-reference
+If a template definition does not specify a template script - then a ref to the script with the same name is automatically included.
+
+
+##Usage
+Install npm and gulp.
+Run 'npm install' to install all of the dependencies.
+Place all source files in src-lighter directory (Note - already present in 'example' directory)
+From command line run:
+* gulp copy
+* gulp extends
+* gulp autoref
+  * or to run all of the above tasks in sequence, run the default task: - just type
+  * gulp
+Files in light-modules directory are overwritten.
 
 License:
 MIT
