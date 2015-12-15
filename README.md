@@ -35,6 +35,7 @@ From command line run:
 * gulp autoref
   * or to run all of the above tasks in sequence, run the default task: - just type
   * gulp
+* gulp watch - Runs extends when file changes.
 * 5.4.3 compatible files are created (overwritten) in 'examples/light-modules' directory.
 
 License:

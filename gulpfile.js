@@ -58,9 +58,26 @@ var FIELDS_REPLACE = FIELDS.map(function(field){
 // }
 
 /**
+Default.
 Runs when you type 'gulp'.
 */
-gulp.task('default', function(callback) {
+gulp.task('default', ['all']);
+
+/**
+Configure which files to watch and what tasks to use on file changes
+TODO: Currently only runs extends task.
+*/
+gulp.task('watch', function() {
+  console.log('watch start.');
+  gulp.watch(SRC_DIR + '/**/*.*', ['extends']);
+});
+
+/**
+Runs when you type 'gulp all'.
+Runs tasks in sequence.
+TODO: Stops working after one run when called from gulp.watch.
+*/
+gulp.task('all', function(callback) {
 
   runSequence('copy','extends', 'autoref',
     function(){
