@@ -1,3 +1,2 @@
-renderType: freemarker
 dialog: hello-magnolia:components/quotation
-title: Quotation5
+title: Quotation

@@ -30,7 +30,11 @@ module.exports = function(startObj, endObj) {
     console.log('>');
   }
 
-  function walkObject(obj, objParent, search) {
+  /**
+  Private.
+  Walks object recursively and merges when it finds the 'search' string.
+  */
+  function walkObjectAndMerge(obj, objParent, search) {
     //logObject("walkObject:", obj);
     var objects = [];
     for (var key in obj) {
@@ -38,7 +42,7 @@ module.exports = function(startObj, endObj) {
         console.log(key);
         var value = obj[key];
         if (typeof obj[key] == 'object') {
-            objects = objects.concat(walkObject(obj[key], obj, search));
+            objects = objects.concat(walkObjectAndMerge(obj[key], obj, search));
         } else {
             //property.
             if (key.indexOf(search) > -1) {
@@ -67,7 +71,7 @@ module.exports = function(startObj, endObj) {
                 // merge the current object.
                 var merged = merge(extended, obj);
                 //logObject("extended node", merged);
-                obj[keyToExtend] = merged;
+                obj[keyToExtend] = merged[keyToExtend];
                 //logObject("obj", obj);
                 //logObject("objParent", objParent);
               }
@@ -96,7 +100,7 @@ module.exports = function(startObj, endObj) {
         var fileObj = JSON.parse(json);
 
         //Find extends
-        walkObject(fileObj, fileObj, "-extends");
+        walkObjectAndMerge(fileObj, fileObj, "-extends");
 
         logObject("fileObj", fileObj);
 

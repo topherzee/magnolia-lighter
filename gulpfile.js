@@ -14,7 +14,8 @@ var AutoRef = require('./src/lighter-auto-ref');
 var SRC_DIR = 'example/src-lighter';
 var DEST_DIR = 'example/light-modules';
 
-var DIALOG_PROTOTYPE = yamljs.load(SRC_DIR + '/prototypes/prototype.dialog.yaml');
+var DIALOG_PROTOTYPE = yamljs.load(SRC_DIR + '/prototypes/dialog.yaml');
+var TEMPLATE_PROTOTYPE = yamljs.load(SRC_DIR + '/prototypes/template.yaml');
 
 var FIELDS = [
   {name: /textField/g,           className: 'info.magnolia.ui.form.field.definition.TextFieldDefinition'},
@@ -39,24 +40,6 @@ var FIELDS_REPLACE = FIELDS.map(function(field){
   };
 });
 
-// For testing purposes.
-// var endObj = {
-//     "actions": {
-//       "YO": [{a:"b"}],
-//       "LO": [{c:"d"}]
-//     }
-// };
-//
-// var startObj = {
-//   "form": {
-//     "tabs": [
-//       {
-//         "coolness": "9"
-//       }
-//     ]
-//   }
-// }
-
 /**
 Default.
 Runs when you type 'gulp'.
@@ -66,64 +49,59 @@ gulp.task('default', ['all']);
 /**
 Configure which files to watch and what tasks to use on file changes
 TODO: Currently only runs extends task.
+TODO: Exclude fragments & prototypes - maybe put those in special src directory.
 */
 gulp.task('watch', function() {
   console.log('watch start.');
-  gulp.watch(SRC_DIR + '/**/*.*', ['extends']);
+  gulp.watch(SRC_DIR + '/**/*.*', ['all']);
 });
 
 /**
 Runs when you type 'gulp all'.
-Runs tasks in sequence.
-TODO: Stops working after one run when called from gulp.watch.
+Note: steps run in parallel.
 */
 gulp.task('all', function(callback) {
-
-  runSequence('copy','extends', 'autoref',
-    function(){
-      console.log('default gulp task is done.');
-      callback;
-    }
-  );
+    processWebResources();
+    processTemplates();
+    processDialogs();
 });
 
 /**
-Copy all files.
-TODO: Only copy non dialog & template defs - since they are handled in other tasks.
+Copy WebResources
 */
-gulp.task('copy', function () {
+function processWebResources(){
+    gulp.src(SRC_DIR + '/*/webresources/**/*.*') // Get source files with gulp.src
+        .pipe(gulp.dest(DEST_DIR)) // Outputs the file in the destination folder
+}
+gulp.task('webResources', function () {
 
-  console.log('Start task: copy');
-  return gulp.src(SRC_DIR + '/*') // Get source files with gulp.src
-    //.pipe(aGulpPlugin()) // Sends it through a gulp plugin
-    .pipe(gulp.dest(DEST_DIR)) // Outputs the file in the destination folder
+  console.log('Start task: webResources');
+    processWebResources();
 })
 
 /**
-Operates on tempaltes for now.
+Process templates.
 */
-gulp.task('autoref', function(){
-
-  console.log('Start task: autoref');
+function processTemplates(){
+  console.log('Start task: templates');
   gulp.src(SRC_DIR + '/*/templates/**/*.yaml')
     .pipe(yaml({ space: 2 }))
+    .pipe(yamlExtends())
+    .pipe(mergeJsonIndividual(TEMPLATE_PROTOTYPE))
     .pipe(AutoRef())
-    //.pipe(yamlExtends())
-    //.pipe(mergeJsonIndividual(DIALOG_PROTOTYPE))
     .pipe(yamlOut())
     .pipe(gulp.dest(DEST_DIR))
+}
+gulp.task('templates', function(){
+    processTemplates();
 });
 
 /**
-Processes: Extends, fields, prototypes
-Operates just on dialog defs for now.
-TODO: Process template defs as well. But dont colide with the autoref.
+Processes dialogs
 */
-gulp.task('extends', function(){
-
-  console.log('Start task: extends');
+function processDialogs(){
+  console.log('Start task: dialogs');
   gulp.src(SRC_DIR + '/*/dialogs/**/*.yaml')
-
     .pipe(replace({
       patterns: FIELDS_REPLACE
     }))
@@ -132,53 +110,7 @@ gulp.task('extends', function(){
     .pipe(mergeJsonIndividual(DIALOG_PROTOTYPE))
     .pipe(yamlOut())
     .pipe(gulp.dest(DEST_DIR))
+}
+gulp.task('dialogs', function(){
+    processDialogs();
 });
-
-
-//
-// gulp.task('fieldsprototype', function(){
-//
-//   gulp.src(SRC_DIR + '/*/dialogs/**/*.yaml')
-//   //First parse the extends - as it is not valid YAML.
-//     .pipe(replace({
-//       patterns: FIELDS_REPLACE
-//     }))
-//     .pipe(yaml({ space: 2 }))
-//     .pipe(mergeJsonIndividual(DIALOG_PROTOTYPE))
-//     .pipe(yamlOut())
-//     .pipe(gulp.dest(DEST_DIR))
-// });
-//
-//
-// gulp.task('fieldsjson', function(){
-//
-//   var FIELDS_REPLACE = fields.map(function(field){
-//     return {match: field.name,
-//       replacement: field.className
-//     };
-//   });
-//   //console.log(FIELDS_REPLACE);
-//   gulp.src(SRC_DIR + '/*/dialogs/**/*.yaml')
-//     .pipe(replace({
-//       patterns: FIELDS_REPLACE
-//     }))
-//     .pipe(yaml({ space: 2 }))
-//     .pipe(gulp.dest(DEST_DIR))
-// });
-//
-// gulp.task('fields', function(){
-//
-//   var FIELDS_REPLACE = fields.map(function(field){
-//     return {match: field.name,
-//       replacement: field.className
-//     };
-//   });
-//
-//   console.log(FIELDS_REPLACE);
-//
-//   gulp.src(SRC_DIR + '/**/*')
-//     .pipe(replace({
-//       patterns: FIELDS_REPLACE
-//     }))
-//     .pipe(gulp.dest(DEST_DIR))
-// });
