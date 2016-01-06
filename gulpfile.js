@@ -1,3 +1,4 @@
+var fs = require('fs');
 var gulp = require('gulp');
 var runSequence = require('run-sequence');
 var yamljs = require('yamljs');
@@ -5,17 +6,21 @@ var replace = require('gulp-replace-task');
 var through = require('through-gulp');
 var yaml = require('gulp-yaml');
 var mergeJson = require('gulp-merge-json');
+var rename = require('gulp-rename');
 
 var mergeJsonIndividual = require('./src/gulp-merge-json-individual.js');
 var yamlOut = require('./src/gulp-yaml-out.js');
 var yamlExtends = require('./src/gulp-yaml-extends');
 var AutoRef = require('./src/lighter-auto-ref');
+var handlebarsIndividual = require('./src/gulp-compile-handlebars-individual.js');
+
 
 var SRC_DIR = 'example/src-lighter';
 var DEST_DIR = 'example/light-modules';
 
 var DIALOG_PROTOTYPE = yamljs.load(SRC_DIR + '/prototypes/dialog.yaml');
 var TEMPLATE_PROTOTYPE = yamljs.load(SRC_DIR + '/prototypes/template.yaml');
+var APP_TEMPLATE = fs.readFileSync(SRC_DIR + '/config-templates/app-template.yaml.hbs', 'utf8');
 
 var FIELDS = [
   {name: /textField/g,           className: 'info.magnolia.ui.form.field.definition.TextFieldDefinition'},
@@ -65,6 +70,21 @@ gulp.task('all', function(callback) {
     processTemplates();
     processDialogs();
 });
+
+/**
+Process Apps
+*/
+function processApps(){
+    gulp.src(SRC_DIR + '/*/apps/**/*.*')
+      .pipe(yaml({ space: 2 }))
+      .pipe(handlebarsIndividual(APP_TEMPLATE))
+      .pipe(rename({extname: ".yaml"}))
+      .pipe(gulp.dest(DEST_DIR))
+}
+gulp.task('apps', function () {
+  console.log('Start task: apps');
+    processApps();
+})
 
 /**
 Copy WebResources

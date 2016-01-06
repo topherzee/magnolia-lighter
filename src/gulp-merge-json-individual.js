@@ -1,6 +1,6 @@
 /*
-Next: Have to create a GULP MODULE or a function. called mergejson.
-It takes the pipe - and an additional file (or json object) and applies it.
+Merges the piped json with a passed startObj and endObj.
+
 Based on https://github.com/joshswan/gulp-merge-json
 https://github.com/gulpjs/gulp/blob/master/docs/writing-a-plugin/README.md
 
