@@ -69,6 +69,7 @@ gulp.task('all', function(callback) {
     processWebResources();
     processTemplates();
     processDialogs();
+    processApps();
 });
 
 /**
