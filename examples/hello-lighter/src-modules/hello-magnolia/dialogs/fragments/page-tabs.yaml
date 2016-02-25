@@ -1,0 +1,10 @@
+tabs:
+  - name: tabText
+    label: Texts
+    fields:
+      - name: title
+        class: textField
+        label: Title
+      - name: introText
+        class: textField
+        label: Introduction text3

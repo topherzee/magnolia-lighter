@@ -1,22 +1,23 @@
 {
   "name": "magnolia-lighter",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "Transform a set of lighter magnolia configuration files to one that actually works with 5.4.3.",
   "main": "index.js",
   "dependencies": {
     "gulp-rename": "^1.2.2"
   },
   "devDependencies": {
-    "deepmerge": "^0.2.10",
     "gulp": "^3.9.0",
     "gulp-compile-handlebars": "^0.6.1",
     "gulp-merge-json": "^0.1.0",
     "gulp-replace": "^0.5.4",
     "gulp-replace-task": "^0.11.0",
     "gulp-util": "^3.0.7",
+    "gulp-wrap": "^0.11.0",
     "gulp-yaml": "^1.0.1",
     "run-sequence": "^1.1.5",
     "through-gulp": "^0.3.8",
+    "gulp-merge-json-individual": "^0.0.1",
     "yamljs": "^0.2.4"
   },
   "scripts": {

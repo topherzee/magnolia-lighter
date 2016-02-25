@@ -7,20 +7,22 @@ var through = require('through-gulp');
 var yaml = require('gulp-yaml');
 var mergeJson = require('gulp-merge-json');
 var rename = require('gulp-rename');
+var wrap = require("gulp-wrap");
 
-var mergeJsonIndividual = require('./src/gulp-merge-json-individual.js');
+var mergeJsonIndividual = require('gulp-merge-json-individual');
+
 var yamlOut = require('./src/gulp-yaml-out.js');
 var yamlExtends = require('./src/gulp-yaml-extends');
 var AutoRef = require('./src/lighter-auto-ref');
-var handlebarsIndividual = require('./src/gulp-compile-handlebars-individual.js');
 
 
-var SRC_DIR = 'example/src-lighter';
-var DEST_DIR = 'example/light-modules';
+var SRC_LIGHTER_DIR = 'examples/hello-lighter/src-lighter';
+var SRC_MODULES_DIR = 'examples/hello-lighter/src-modules';
+var DEST_DIR = 'examples/hello-lighter/dest';
 
-var DIALOG_PROTOTYPE = yamljs.load(SRC_DIR + '/prototypes/dialog.yaml');
-var TEMPLATE_PROTOTYPE = yamljs.load(SRC_DIR + '/prototypes/template.yaml');
-var APP_TEMPLATE = fs.readFileSync(SRC_DIR + '/config-templates/app-template.yaml.hbs', 'utf8');
+var DIALOG_PROTOTYPE = yamljs.load(SRC_LIGHTER_DIR + '/prototypes/dialog.yaml');
+var TEMPLATE_PROTOTYPE = yamljs.load(SRC_LIGHTER_DIR + '/prototypes/template.yaml');
+var APP_TEMPLATE = fs.readFileSync(SRC_LIGHTER_DIR + '/config-templates/app-template.yaml.hbs', 'utf8');
 
 var FIELDS = [
   {name: /textField/g,           className: 'info.magnolia.ui.form.field.definition.TextFieldDefinition'},
@@ -76,9 +78,9 @@ gulp.task('all', function(callback) {
 Process Apps
 */
 function processApps(){
-    gulp.src(SRC_DIR + '/*/apps/**/*.*')
+    gulp.src(SRC_MODULES_DIR + '/*/apps/**/*.*')
       .pipe(yaml({ space: 2 }))
-      .pipe(handlebarsIndividual(APP_TEMPLATE))
+      .pipe(wrap(APP_TEMPLATE,{},{engine:'handlebars'}))
       .pipe(rename({extname: ".yaml"}))
       .pipe(gulp.dest(DEST_DIR))
 }
@@ -91,7 +93,7 @@ gulp.task('apps', function () {
 Copy WebResources
 */
 function processWebResources(){
-    gulp.src(SRC_DIR + '/*/webresources/**/*.*') // Get source files with gulp.src
+    gulp.src(SRC_MODULES_DIR + '/*/webresources/**/*.*') // Get source files with gulp.src
         .pipe(gulp.dest(DEST_DIR)) // Outputs the file in the destination folder
 }
 gulp.task('webResources', function () {
@@ -105,7 +107,7 @@ Process templates.
 */
 function processTemplates(){
   console.log('Start task: templates');
-  gulp.src(SRC_DIR + '/*/templates/**/*.yaml')
+  gulp.src(SRC_MODULES_DIR + '/*/templates/**/*.yaml')
     .pipe(yaml({ space: 2 }))
     .pipe(yamlExtends())
     .pipe(mergeJsonIndividual(TEMPLATE_PROTOTYPE))
@@ -122,7 +124,7 @@ Processes dialogs
 */
 function processDialogs(){
   console.log('Start task: dialogs');
-  gulp.src(SRC_DIR + '/*/dialogs/**/*.yaml')
+  gulp.src(SRC_MODULES_DIR + '/*/dialogs/**/*.yaml')
     .pipe(replace({
       patterns: FIELDS_REPLACE
     }))

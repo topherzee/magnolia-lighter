@@ -1,5 +1,5 @@
 form:
-  tabs-extends: ./example/src-lighter/fragments/dialogs/page-tabs.yaml
+  tabs-extends: ./examples/hello-lighter/src-modules/hello-magnolia/dialogs/fragments/page-tabs.yaml
   tabs:
     - name: tabText
       label: Hello Texts
