@@ -1,6 +1,5 @@
 visible: true
 title: Hello template
-dialog: hello-magnolia:pages/hello
 areas:
   main:
     availableComponents:

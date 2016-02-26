@@ -10,10 +10,11 @@ var rename = require('gulp-rename');
 var wrap = require("gulp-wrap");
 
 var mergeJsonIndividual = require('gulp-merge-json-individual');
+var jsonToYaml = require('gulp-json-to-yaml');
 
-var yamlOut = require('./src/gulp-yaml-out.js');
-var yamlExtends = require('./src/gulp-yaml-extends');
-var AutoRef = require('./src/lighter-auto-ref');
+//var yamlOut = require('./src/gulp-yaml-out.js');
+var jsonExtends = require('gulp-json-include-and-merge');
+var lighterAutoRef = require('./src/gulp-lighter-auto-ref');
 
 
 var SRC_LIGHTER_DIR = 'examples/hello-lighter/src-lighter';
@@ -107,12 +108,17 @@ Process templates.
 */
 function processTemplates(){
   console.log('Start task: templates');
+  // Copy the ftl files.
+  gulp.src(SRC_MODULES_DIR + '/*/templates/**/*.ftl')
+      .pipe(gulp.dest(DEST_DIR))
+
+  // Process the yaml files.
   gulp.src(SRC_MODULES_DIR + '/*/templates/**/*.yaml')
     .pipe(yaml({ space: 2 }))
-    .pipe(yamlExtends())
+    .pipe(jsonExtends())
     .pipe(mergeJsonIndividual(TEMPLATE_PROTOTYPE))
-    .pipe(AutoRef())
-    .pipe(yamlOut())
+    .pipe(lighterAutoRef())
+    .pipe(jsonToYaml())
     .pipe(gulp.dest(DEST_DIR))
 }
 gulp.task('templates', function(){
@@ -129,9 +135,9 @@ function processDialogs(){
       patterns: FIELDS_REPLACE
     }))
     .pipe(yaml({ space: 2 }))
-    .pipe(yamlExtends())
+    .pipe(jsonExtends())
     .pipe(mergeJsonIndividual(DIALOG_PROTOTYPE))
-    .pipe(yamlOut())
+    .pipe(jsonToYaml())
     .pipe(gulp.dest(DEST_DIR))
 }
 gulp.task('dialogs', function(){

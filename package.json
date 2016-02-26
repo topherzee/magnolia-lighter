@@ -2,7 +2,10 @@
   "name": "magnolia-lighter",
   "version": "0.0.1",
   "description": "Transform a set of lighter magnolia configuration files to one that actually works with 5.4.3.",
-  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/topherzee/magnolia-lighter.git"
+  },
   "dependencies": {
     "gulp-rename": "^1.2.2"
   },
@@ -17,11 +20,14 @@
     "gulp-yaml": "^1.0.1",
     "run-sequence": "^1.1.5",
     "through-gulp": "^0.3.8",
+    "yamljs": "^0.2.4",
+
     "gulp-merge-json-individual": "^0.0.1",
-    "yamljs": "^0.2.4"
+    "gulp-json-to-yaml": "^0.0.1",
+    "gulp-json-include-and-merge": "^0.0.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"No test specified\" && exit 1"
   },
   "author": "Christopher Zimmmermann",
   "license": "MIT"
