@@ -21,50 +21,50 @@ I've intentionally left the code very exposed, not hiding it away, so that you
 can see how easy it is to experiment. I hope that you may come up with your own shortcuts or improvements. If so - dont be shy to fork the project and share your changes with others.
 
 
-##Lighter Configuration Features
+###Lighter Configuration Features
 
-####Dialog Fields:
+#####Dialog Fields:
 You can use names like textField instead of info.magnolia.ui.form.field.definition.TextFieldDefinition.
 
-####Extends (Include and Merge):
+#####Extends (Include and Merge):
 YAML must still be valid YAML.
 To use, include a field with a '--extends' after it, with a path as a value.
 For example "tabs--extends":
 will extend tabs.
 
-####Prototypes:
+#####Prototypes:
 Specify prototypes for configuration of each definition type.
 Definitions will then merge with those automatically.
 (Uses Extends feature.)
 
-####Dialogs have default actions
+#####Dialogs have default actions
 A /prototypes/prototype.dialog.yaml configures the commit and cancel action.
 (Uses prototype feature)
 
-####Script Auto-reference
+#####Script Auto-reference
 If a template definition does not specify a template script - then a ref to the script with the same name is automatically included.
 
-####Dialog Auto-reference
+#####Dialog Auto-reference
 If a template definition does not specify a dialog - then a ref to the dialog with the same name is automatically included.
 
-####Easy Apps
+#####Easy Apps
 A yaml file in the apps directory needs only configure name, displayName, icon & workspace.
 This information is rendered via a handlebar template strored in  /config-templates/app-template.yaml.hbs, resulting in a full app yaml configuration.
 
 ##Demonstrated Key techniques
 All of the 'Lighter' features mentioned above are based on these key techniques:
 
-####Yaml to Json to Yaml:
+#####Yaml to Json to Yaml:
 Node, npm and gulp modules operate on json. So its helpful to convert yaml to json and back.
 
-####Replace:
+#####Replace:
 Provide a yaml file with simple key-value pairs of strings to replace in a set of files.
 (Used by the Dialog Fields feature.)
 
-####Deep Merge:
+#####Deep Merge:
 Merge a yaml file with a set of files.
 
-####Template processing (Handlebars)
+#####Template processing (Handlebars)
 Run (or 'wrap') a set of configuration files through a template.
 (Used by the Easy Apps)
 
