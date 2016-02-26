@@ -93,7 +93,7 @@ You could set it up in a number of ways, but here is one pattern that you could 
 Directory Setup:
 * Copy the entire magnolia-lighter to a new directory for your project: `<myProj>/magnolia-lighter`.
  * (This enables you to hack on anything in the project, without disturbing other projects.)
-* Copy `examples/starter/src-lighter` dir to your project:
+* Copy `examples/hello-lighter/src-lighter` dir to your project:
 `<myProj>/src-lighter`
 * Create `<myProj>/src-modules` dir and put your modules with lighter configuration files in there.
 * Create `<myProj>/modules` dir which will contain the output.
