@@ -1,5 +1,5 @@
-name: {{name}}
-label: {{displayName}}
+name: {{contents.name}}
+label: {{contents.displayName}}
 appClass: info.magnolia.ui.contentapp.ContentApp
 class: info.magnolia.ui.contentapp.ConfiguredContentAppDescriptor
 subApps:
@@ -8,7 +8,7 @@ subApps:
     class: info.magnolia.ui.contentapp.browser.BrowserSubAppDescriptor
     actions:
       addItem:
-        appName: {{name}}
+        appName: {{contents.name}}
         subAppId: detail
         icon: icon-add-tag-2
         nodeType: mgnl:content
@@ -21,7 +21,7 @@ subApps:
             - name: IsNotDeletedRule
               implementationClass: info.magnolia.ui.framework.availability.IsNotDeletedRule
       editItem:
-        appName: {{name}}
+        appName: {{contents.name}}
         subAppId: detail
         icon: icon-edit
         class: info.magnolia.ui.contentapp.detail.action.EditItemActionDefinition
@@ -388,7 +388,7 @@ subApps:
       defaultOrder: jcrName
       rootPath: /
       includeProperties: false
-      workspace: {{workspace}}
+      workspace: {{contents.workspace}}
       nodeTypes:
         - name: mgnl:content
           strict: false
@@ -481,4 +481,4 @@ subApps:
       cancel:
         class: info.magnolia.ui.form.action.CancelFormActionDefinition
     contentConnector:
-      workspace: {{workspace}}
+      workspace: {{contents.workspace}}
