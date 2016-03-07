@@ -31,31 +31,6 @@ var TEMPLATE_PROTOTYPE = yamljs.load(SRC_LIGHTER_DIR + '/prototypes/template.yam
 var APP_TEMPLATE = fs.readFileSync(SRC_LIGHTER_DIR + '/config-templates/app-template.yaml.hbs', 'utf8');
 var DIALOG_FIELD_REPLACEMENTS = fs.readFileSync(SRC_LIGHTER_DIR + '/replacements/dialog-fields.yaml', 'utf8');
 
-
-
-// var FIELDS = [
-//   {name: /textField/g,           className: 'info.magnolia.ui.form.field.definition.TextFieldDefinition'},
-//   {name: /richTextField/g,       className: 'info.magnolia.ui.form.field.definition.RichTextFieldDefinition'},
-//   {name: /dateField/g,           className: 'info.magnolia.ui.form.field.definition.DateFieldDefinition'},
-//   {name: /hiddenField/g,         className: 'info.magnolia.ui.form.field.definition.HiddenFieldDefinition'},
-//   {name: /multiValueField/g,     className: 'info.magnolia.ui.form.field.definition.MultiValueFieldDefinition'},
-//   {name: /passwordField/g,       className: 'info.magnolia.ui.form.field.definition.PasswordFieldDefinition'},
-//   {name: /selectField/g,         className: 'info.magnolia.ui.form.field.definition.SelectFieldDefinition'},
-//   {name: /optionGroupField/g,    className: 'info.magnolia.ui.form.field.definition.OptionGroupFieldDefinition'},
-//   {name: /twinColSelectField/g,  className: 'info.magnolia.ui.form.field.definition.TwinColSelectFieldDefinition'},
-//   {name: /comboBoxField/g,       className: 'info.magnolia.ui.form.field.definition.CheckBoxFieldDefinition'},
-//   {name: /compositeField/g,      className: 'info.magnolia.ui.form.field.definition.CompositeFieldDefinition'},
-//   {name: /switchableField/g,     className: 'info.magnolia.ui.form.field.definition.SwitchableFieldDefinition'},
-//   {name: /basicUploadField/g,    className: 'info.magnolia.ui.form.field.definition.BasicUploadFieldDefinition'},
-//   {name: /damUploadFieldField/g, className: 'info.magnolia.dam.app.ui.field.definition.DamUploadFieldDefinition'}
-// ];
-//
-// var FIELDS_REPLACE = FIELDS.map(function(field){
-//   return {match: field.name,
-//     replacement: field.className
-//   };
-// });
-
 /**
 Default.
 Runs when you type 'gulp'.
@@ -64,7 +39,6 @@ gulp.task('default', ['all']);
 
 /**
 Configure which files to watch and what tasks to use on file changes
-TODO: Currently only runs extends task.
 TODO: Exclude fragments & prototypes - maybe put those in special src directory.
 */
 gulp.task('watch', function() {
@@ -143,7 +117,7 @@ function processDialogs(){
       usePrefix: false,
       patterns: [
         {
-          yaml: 'richTextField: info.magnolia.ui.form.field.definition.RichTextFieldDefinition'
+          yaml: DIALOG_FIELD_REPLACEMENTS
         }]
     }))
     .pipe(yaml({ space: 2 }))
