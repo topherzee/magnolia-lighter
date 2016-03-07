@@ -69,7 +69,7 @@ TODO: Exclude fragments & prototypes - maybe put those in special src directory.
 */
 gulp.task('watch', function() {
   console.log('watch start.');
-  gulp.watch(SRC_DIR + '/**/*.*', ['all']);
+  gulp.watch(SRC_MODULES_DIR + '/**/*.*', ['all']);
 });
 
 /**
