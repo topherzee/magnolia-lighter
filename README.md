@@ -1,6 +1,5 @@
 # magnolia-lighter
-Build tool to process Very light configuration files, or configuration of your
-own design into valid Magnolia 5.4.4 compatible config.
+Build tool to process very light configuration files, or configuration of your own design into valid Magnolia 5.4.4 compatible config.
 
 ##About
 With 5.4 Magnolia CMS introduced Light Development, including the ability

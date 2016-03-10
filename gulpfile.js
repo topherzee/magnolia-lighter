@@ -25,7 +25,7 @@ var jsonExtends = require('gulp-json-include-and-merge');
 var lighterAutoRef = require('./src/gulp-lighter-auto-ref');
 
 // configuration by src-lighter files
-
+// TODO: Dont load these at startup. They should load at runtime so that gulp watch could update files on change.
 var DIALOG_PROTOTYPE = yamljs.load(SRC_LIGHTER_DIR + '/prototypes/dialog.yaml');
 var TEMPLATE_PROTOTYPE = yamljs.load(SRC_LIGHTER_DIR + '/prototypes/template.yaml');
 var APP_TEMPLATE = fs.readFileSync(SRC_LIGHTER_DIR + '/config-templates/app-template.yaml.hbs', 'utf8');
@@ -38,19 +38,18 @@ Runs when you type 'gulp'.
 gulp.task('default', ['all']);
 
 /**
-Configure which files to watch and what tasks to use on file changes
-TODO: Exclude fragments & prototypes - maybe put those in special src directory.
+Runs all task on any file change.
 */
 gulp.task('watch', function() {
   console.log('watch start.');
-  gulp.watch(SRC_MODULES_DIR + '/**/*.*', ['all']);
+  gulp.watch([SRC_MODULES_DIR + '/**/*.*', SRC_LIGHTER_DIR + '/**/*.*'], ['all']);
 });
 
 /**
 Runs when you type 'gulp all'.
 Note: steps run in parallel.
 */
-gulp.task('all', function(callback) {
+gulp.task('all', function() {
     processWebResources();
     processTemplates();
     processDialogs();
@@ -87,6 +86,7 @@ gulp.task('webResources', function () {
 
 /**
 Process templates.
+TODO: Exclude fragments & prototypes - maybe put those in special src directory.
 */
 function processTemplates(){
   console.log('Start task: templates');
