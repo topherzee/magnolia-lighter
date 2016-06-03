@@ -1,7 +1,7 @@
 {
   "name": "magnolia-lighter",
   "version": "0.0.3",
-  "description": "Transform a set of lighter magnolia configuration files to one that actually works with 5.4.3.",
+  "description": "Build tool to process very light configuration files, or configuration of your own design into valid Magnolia 5.4.4+ compatible config.",
   "repository": {
     "type": "git",
     "url": "https://github.com/topherzee/magnolia-lighter.git"

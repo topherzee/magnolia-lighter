@@ -1,5 +1,5 @@
 # magnolia-lighter
-Build tool to process very light configuration files, or configuration of your own design into valid Magnolia 5.4.4 compatible config.
+Build tool to process very light configuration files, or configuration of your own design into valid Magnolia 5.4.4+ compatible config.
 
 ##About
 With 5.4 Magnolia CMS introduced Light Development, including the ability
@@ -19,11 +19,12 @@ but until then you can use Lighter if you want to try or use them.
 I've intentionally left the code very exposed, not hiding it away, so that you
 can experiment. I hope that you may come up with your own improvements. If so - consider forking the project and share your changes with others.
 
+** Please note that this is an experiment and is not an officially supported Magnolia project. **
 
 ###Lighter Configuration Features
 
-#####Dialog Fields:
-You can use names like textField instead of info.magnolia.ui.form.field.definition.TextFieldDefinition.
+#####Simple field names:
+In a dialog, you can use names like textField instead of info.magnolia.ui.form.field.definition.TextFieldDefinition.
 
 #####Extends (Include and Merge):
 YAML must still be valid YAML.
@@ -89,10 +90,11 @@ and written to: `examples/hello-lighter/dest/hello-magnolia` directory.
 ###Watching
 * gulp watch - Runs whenever any file changes. (Not fully tested.)
 
-###Usage on your Magnolia project
-You could set it up in a number of ways, but here is one pattern that you could start with.
+###Connect to Magnolia
+Just configure your Magnolia `magnolia.resources.dir` property to point to the `examples/hello-lighter/dest` directory.
 
-Assuming `<light modules dir path>` is the path that your Magnolia instance points to via the `magnolia.resources.dir` value in the `magnolia.properties` file.
+###Usage on an existing Magnolia project
+Or, to use it with an existing Magnolia project, you could:
 
 Setup:
 * Clone magnolia-lighter to a new directory for your project: `<myProj>/magnolia-lighter`.
