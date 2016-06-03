@@ -19,7 +19,7 @@ but until then you can use Lighter if you want to try or use them.
 I've intentionally left the code very exposed, not hiding it away, so that you
 can experiment. I hope that you may come up with your own improvements. If so - consider forking the project and share your changes with others.
 
-** Please note that this is an experiment and is not an officially supported Magnolia project. **
+**Please note that this is an experiment and is not an officially supported Magnolia project.**
 
 ###Lighter Configuration Features
 
