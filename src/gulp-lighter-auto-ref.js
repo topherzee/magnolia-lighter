@@ -12,6 +12,7 @@ var gutil = require('gulp-util');
 var through = require('through2');
 var util = require('util');
 var fs = require('fs');
+var path = require('path');
 
 var PLUGIN_NAME = 'gulp-lighter-auto-ref';
 
@@ -23,6 +24,11 @@ module.exports = function() {
 
   function logObject(name,obj){
     console.log(name + ":" + util.inspect(obj, {showHidden: false, depth: null}));
+  }
+
+  /* Wrap in path separaters. (Cross platform.) */
+  function sepwrap(wrap_me){
+    return path.sep + wrap_me + path.sep;
   }
 
   return through.obj(function(file, enc, callback) {
@@ -43,40 +49,42 @@ module.exports = function() {
         if (fileObj){
           var relPath = file.path.substring(file.base.length);
 
-          // Auto reference - templateScript.
+          // TemplateScript.
+          // Automatically add a reference to templateScript if none is specified.
           if(!fileObj['templateScript']){
             var relPathScript = relPath.substring(0, relPath.lastIndexOf('.')) + '.' + SCRIPT_EXTENSION;
-            //console.log("file.path:" + file.path);
-            //console.log("relPath:" + relPath);
 
             //Check for existance of file
             var pathScript = file.base + relPathScript;
             console.log("pathScript:" + pathScript);
             try {
                 var stats = fs.statSync(pathScript);
-                //If it didnt exist it would error - now add it do definition.
-                fileObj['templateScript'] = '/' + relPathScript;
+                //If it didnt exist it would error - now add it to the definition.
+                fileObj['templateScript'] = '/' + relPathScript.replace(/\\/g, '/');
             } catch (e) {
                 // nothing
                 //console.log("error on stat" + pathScript + ":" + e);
             }
           }
 
-          // Auto reference - dialog.
+          // Dialog.
+          // Automatically add a reference to a dialog if none is specified.
           if(!fileObj['dialog']){
             var relPathDialog = relPath.substring(0, relPath.lastIndexOf('.')) + '.' + YAML_EXTENSION;
-            relPathDialog = relPathDialog.replace('/templates/','/dialogs/');
-            //console.log("relPathDialog:" + relPathDialog);
+            relPathDialog = relPathDialog.replace(sepwrap('templates'), sepwrap('dialogs'));
+
             //Check for existance of file!
             var pathDialog = file.base + relPathDialog;
-            console.log("pathDialog:" + pathDialog);
+            //console.log("pathDialog:" + pathDialog);
             try {
                 stats = fs.statSync(pathDialog);
-                //If it didnt exist it would error - now add it do definition.
-                var moduleName = relPathDialog.substring(0, relPathDialog.indexOf('/'));
-                var dialogPath = relPathDialog.substring(relPathDialog.indexOf('/dialogs/') + '/dialogs/'.length);
+                //If it didnt exist it would error - now add it to the definition.
+                var moduleName = relPathDialog.substring(0, relPathDialog.indexOf(path.sep));
+                console.log("moduleName:" + moduleName);
+                var dialogPath = relPathDialog.substring(relPathDialog.indexOf(sepwrap('dialogs')) + sepwrap('dialogs').length);
                 var dialogName = dialogPath.substring(0, dialogPath.lastIndexOf('.'));
-                fileObj['dialog'] = moduleName + ':' + dialogName;
+
+                fileObj['dialog'] = moduleName + ':' + dialogName.replace(/\\/g, '/');
             } catch (e) {
                 // nothing
                 //console.log("error on stat" + pathScript + ":" + e);
